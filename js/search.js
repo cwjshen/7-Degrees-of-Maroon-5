@@ -49,7 +49,7 @@
       if (searched == "") {
         return;
       }
-    window.location.href = "index.html#" + searched;
+    window.location.href = "main.html#" + searched;
 
   };
 
