@@ -72,5 +72,6 @@
             })
         })
 
-     history.replaceState({}, document.title, "/index.html");
+
+     history.replaceState({}, document.title, "/main.html");
     }
