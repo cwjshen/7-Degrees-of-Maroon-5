@@ -6,6 +6,14 @@
 
 /* Kit's comment: if you want the sidebar to go on the right, just find and replace all occurances of "left" with "right" */
 
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
 #wrapper.toggled {
     padding-left: 250px;
 }
@@ -19,6 +27,10 @@
     margin-left: -250px;
     overflow-y: auto;
     background: #FFFFFF;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -54,7 +66,7 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: #000000;
     transition:0.5s ease all;
     -moz-transition:0.5s ease all; 
     -webkit-transition:0.5s ease all;
