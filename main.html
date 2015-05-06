@@ -4,25 +4,28 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Let's Go Team</title>
+    <title>Artist Exploration</title>
 
-  <script src="libs/d3/d3.min.js" charset="utf-8"></script>
-    <script src="libs/jquery/jquery-2.1.1.min.js" charset="utf-8"></script>
+    <!--jQuery-->
+    <script src="libs/jquery/jquery-2.1.1.min.js" charset="utf-8"></script> 
+
+    <!-- D3 -->
+    <script src="libs/d3/d3.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script> 
+
+    <!-- Bootstrap -->
     <script src="libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
-    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
 
-
-    <!-- Main Javascript -->
+    <!-- Main -->
     <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
 
     <!-- Search Functions -->
     <script src="js/search.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
-
     <!-- An attempt ot make the sidebar work -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="FPScripts.js"></script>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -32,124 +35,74 @@
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/simple-sidebar-right.css" rel="stylesheet">
 
-    <!--Autosuggest jQuery-->
+    <!-- Autocomplete jQuery-UI -->
     <script src="libs/jquery-ui/jquery.js"></script>
     <script src="libs/jquery-ui/jquery-ui.js"></script>
     <link rel="stylesheet" href="libs/jquery-ui/jquery-ui.css">
 
     <style type="text/css">
-    body {
-      width: 1400px;
-      margin: 25px auto;
-      font-family: 'Lato', sans-serif;
-      text-align: center;
-    }
-    .node {
-      stroke: #999;
-      stroke-width: 1;
-      fill: #33B5E5;
-      opacity: 0.9;
-    }
-    .zero {
-      fill: #33B5E5;
-    }
-    .one{
-      fill: #ff4500; 
-    }
-    .two{
-      fill: #98df8a;
-    }
-    .three{
-      fill: #FFBB33;
-    }
-    .four{
-      fill: #FF4444;
-    }
-      circle:hover {
-          opacity: 0.3;
-        }
-    .link {
-      stroke: #999;
-      stroke-opacity: 0.6;
-    }
-    .info {
-      line-height: 12px;
-    }
-    #clicked {
-      font-size: 14pt;
-    }
-    .header {
-      font-size: 18pt;
-    }
-    #primary {
-      color: #33B5E5;
-    }
-    .playing {
-      color: #FF4444;
-    }
-    .search{
-      font-size: 16pt;
-      text-align: center;
+    .selected{
+      background-color: #9fe025;
     }
     .ui-menu-item{
       font-family: 'Lato', sans-serif;
     }
-    .btn:hover{
-      background-color: #d3d3d3;
-    }
     .ui-menu{
       width: 241px;
     }
+    li a {
+      color: black;
+    }
   </style>
 
-  <script>
-
-  </script>
+    <!-- Helper Functions -->
+    <script src="js/helper.js"></script>
+   
 </head>
 
 <body>
 
   <div id="wrapper">
   <!-- Sidebar -->
-        <div id="sidebar-wrapper" style="text-align: center">
-
+        <div id="sidebar-wrapper">
             <!-- Navigation for the sidebar -->
             <div class="info">
               <ul class="sidebar-nav">
                   <li>
-                      <text id="clicked" style="font-size: 27px">Artist</text>
+                      <text id="clicked"></text>
+                  </li>
+                  <hr style="margin-top: 0px; margin-bottom: 0px;">
+                  <li>
+                      <a class="song" id="song1" onclick="playSong(0)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song1" onclick="playSong(0)" style="cursor: pointer">Artist Song 1</a>
+                      <a class="song" id="song2" onclick="playSong(1)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song2" onclick="playSong(1)" style="cursor: pointer">Artist Song 2</a>
+                      <a class="song" id="song3" onclick="playSong(2)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song3" onclick="playSong(2)" style="cursor: pointer">Artist Song 3</a>
+                      <a class="song" id="song4" onclick="playSong(3)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song4" onclick="playSong(3)" style="cursor: pointer">Artist Song 4</a>
+                      <a class="song" id="song5" onclick="playSong(4)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song5" onclick="playSong(4)" style="cursor: pointer">Artist Song 5</a>
+                      <a class="song" id="song6" onclick="playSong(5)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song6" onclick="playSong(5)" style="cursor: pointer">Artist Song 6</a>
+                      <a class="song" id="song7" onclick="playSong(6)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song7" onclick="playSong(6)" style="cursor: pointer">Artist Song 7</a>
+                      <a class="song" id="song8" onclick="playSong(7)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song8" onclick="playSong(7)" style="cursor: pointer">Artist Song 8</a>
+                      <a class="song" id="song9" onclick="playSong(8)" style="cursor: pointer"></a>
                   </li>
                   <li>
-                      <a class="song" id="song9" onclick="playSong(8)" style="cursor: pointer">Artist Song 9</a>
+                      <a class="song" id="song10" onclick="playSong(9)" style="cursor: pointer"></a>
                   </li>
-                  <li>
-                      <a class="song" id="song10" onclick="playSong(9)" style="cursor: pointer">Artist Song 10</a>
-                  </li>
-                  <br> <br>
+                  <br> <br><br>
 
                   <span style="font-size: 20px"> PROJECT TEAM </span>
                   <br><br>
@@ -192,53 +145,56 @@
                   Here, you can manipulate the properties surrounding the nodes.
                   <li>
                       <strong> Number of Nodes Around Central Node </strong>
-                      <div class="btn-group">
-                        <button class="btn" onclick="changeNumNodes(1)">1</button>
-                        <button class="btn" onclick="changeNumNodes(2)">2</button>
-                        <button class="btn" onclick="changeNumNodes(3)">3</button>
-                        <button class="btn" onclick="changeNumNodes(4)">4</button>
-                        <button class="btn" onclick="changeNumNodes(5)">5</button>
+                      <div class="numberOfNodes">
+                        <div class="btn-group">
+                        <!-- <button class="btn numberNodes" style="background-color:green" onclick="changeNumNodes(1)">1</button> -->
+                        <button class="btn numberNodes" id="num1" onclick="changeNumNodes(1)">1</button>
+                        <button class="btn numberNodes" id="num2" onclick="changeNumNodes(2)">2</button>
+                        <button class="btn numberNodes" id="num3" onclick="changeNumNodes(3)">3</button>
+                        <button class="btn numberNodes" id="num4" onclick="changeNumNodes(4)">4</button>
+                        <button class="btn numberNodes" id="num5" onclick="changeNumNodes(5)">5</button>
                       </div>
                       <div class="btn-group">
-                        <button class="btn" onclick="changeNumNodes(6)">6</button>
-                        <button class="btn" onclick="changeNumNodes(7)">7</button>
-                        <button class="btn" onclick="changeNumNodes(8)">8</button>
-                        <button class="btn" onclick="changeNumNodes(9)">9</button>
-                        <button class="btn" onclick="changeNumNodes(10)">10</button>
+                        <button class="btn numberNodes" id="num6" onclick="changeNumNodes(6)">6</button>
+                        <button class="btn numberNodes" id="num7" onclick="changeNumNodes(7)">7</button>
+                        <button class="btn numberNodes" id="num8" onclick="changeNumNodes(8)">8</button>
+                        <button class="btn numberNodes" id="num9" onclick="changeNumNodes(9)">9</button>
+                        <button class="btn numberNodes" id="num10" onclick="changeNumNodes(10)">10</button>
                       </div>
+                      <div>
                   </li>
                   <li>
                       <strong> Degree of Nodes </strong>
-                      <div class="btn-group">
-                        <button class="btn" onclick="changeDegreeNodes(1)">1</button>
-                        <button class="btn" onclick="changeDegreeNodes(2)">2</button>
-                        <button class="btn" onclick="changeDegreeNodes(3)">3</button>
-                        <button class="btn" onclick="changeDegreeNodes(4)">4</button>
-                        <button class="btn" onclick="changeDegreeNodes(5)">5</button>
+                      <div class="btn-group degreeOfNodes">
+                        <button class="btn degreeNodes" id="deg1" onclick="changeDegreeNodes(1)">1</button>
+                        <button class="btn degreeNodes" id="deg2" onclick="changeDegreeNodes(2)">2</button>
+                        <button class="btn degreeNodes" id="deg3" onclick="changeDegreeNodes(3)">3</button>
+                        <button class="btn degreeNodes" id="deg4" onclick="changeDegreeNodes(4)">4</button>
+                        <button class="btn degreeNodes" id="deg5" onclick="changeDegreeNodes(5)">5</button>
                       </div>
                   </li>
                   <li>
                       <strong> Size of Nodes </strong>
-                      <div class="btn-group">
-                        <button class="btn" onclick="changeNodeSize(1)">Small</button>
-                        <button class="btn" onclick="changeNodeSize(17)">Medium</button>
-                        <button class="btn" onclick="changeNodeSize(30)">Large</button>
+                      <div class="btn-group sizeOfNodes">
+                        <button class="btn sizeNodes" id="size1" onclick="changeNodeSize(1)">Small</button>
+                        <button class="btn sizeNodes" id="size17" onclick="changeNodeSize(17)">Medium</button>
+                        <button class="btn sizeNodes" id="size30" onclick="changeNodeSize(30)">Large</button>
                       </div>
                   </li>
                   <li>
                       <strong> Freeze visualization? (It helps with lag)</strong> 
-                      <div class="btn-group">
-                        <button class="btn" onclick="stopForceLayout()">Yes</button>
-                        <button class="btn" onclick="restartForceLayout()">Unfreeze</button>
+                      <div class="btn-group freezeTheNodes">
+                        <button class="btn frozenOrNo" id="yeah" onclick="stopForceLayout()">Yes</button>
+                        <button class="btn frozenOrNo" id="nope" onclick="restartForceLayout()">Unfreeze</button>
                       </div>
                   </li>
                   <li>
                       <strong> Charge (Space between nodes)</strong> 
-                      <div class="btn-group">
-                        <button class="btn" onclick="changeCharge(-1000)">Low</button>
-                        <button class="btn" onclick="changeCharge(-5000)">Normal</button>
-                        <button class="btn" onclick="changeCharge(-10000)">High</button>
-                        <button class="btn" onclick="changeCharge(-50000)">Super</button>
+                      <div class="btn-group chargeOfNodes">
+                        <button class="btn chargeNodes" id="charge-1000" onclick="changeCharge(-1000)">Low</button>
+                        <button class="btn chargeNodes" id="charge-5000" onclick="changeCharge(-5000)">Normal</button>
+                        <button class="btn chargeNodes" id="charge-10000" onclick="changeCharge(-10000)">High</button>
+                        <button class="btn chargeNodes" id="charge-50000" onclick="changeCharge(-50000)">Super</button>
                       </div>
                       <br>
                   </li>
@@ -251,40 +207,66 @@
 
         <div class="header">
           <span style="font-size: 30px">7 degrees of <text id="primary">Spotify</text></span> <br>
-          <span style="font-size: 20px">Currently hovering on: <text id="hovered"></text></span> <br>
-          <button type="button" class="btn btn-default" onclick="stopMusic()">Stop Music</button>
-          <a class="btn btn-default" id="menu-toggle">Toggle Left</a>
-          <a class="btn btn-default" id="menu-toggle-right">Toggle Right</a>
+
+          <span style="font-size: 20px"><text id="hovered"></text></span> <br>
+          <a class="btn btn-default" id="menu-toggle">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+          </a>
+          <button type="button" class="btn btn-default" onclick="stopMusic()">
+            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default" onclick="playPauseMusic()">
+             <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+             <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default" onclick="whenClick(listenObj)">
+            <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default" onclick="playNextArtist()">
+            <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+          </button>
+          <a class="btn btn-default" id="menu-toggle-right">
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+          </a>
         </div>
+
+      <div id="main"></div>
+      Comparative Popularity of Artists
+      <div><svg id="chart"></svg></div>
 
   <script>
   var degree; // degree of separation where 0 is the original artist
-  var limit = 1; // highest degree from main artist; max 5
+  var limit = 4; // highest degree from main artist; max 5
   var frontier = [[],[]]; // keeping what needs to be visited (IDs)
   var visited = []; // keeping what has already been visited (IDs)
   var graph = {nodes: [], links: []};
-  var starting_id = "04gDigrS5kc9YWfZHwBETP";
-  var num_related = 10; // number [1,20]
+  var starting_id = "04gDigrS5kc9YWfZHwBETP"; // maroon 5
+  var num_related = 3; // number [1,20]
   var baseUrl = "https://api.spotify.com/v1/artists/";
   var searchUrl = "https://api.spotify.com/v1/search?q=";
   var audio = new Audio();
   var curr_id = null;
   var deg_names = ["zero","one","two","three","four","five"];
-  var nodeSize = 17;
+  var nodeSize = 17; // default size of nodes
   var currentNodeID = starting_id;
   var doubleClicked = false;
   var forceCharge = -5000;
-  var currTracks = [];
+  var currTracks = []; // current tracks of clicked artist
   var click_id = null;
-  var click = 0;
-  var order = [];
-  var primaryObj = {};
-  var samePrimary = false;
+  var click = 0; // for shuffling purposes
+  var order = []; // for shuffling purposes
+  var primaryObj = {}; 
+  var listenObj = {}; // obj of artist currently listening to
+  var samePrimary = false; // if executing an action results in same primary artist
+  var click_deg = "zero"; // what degree node was clicked
+  var deg_colors = ["#33B5E5","#FF4500","#98df8a","#FFBB33","#FF4444","#7E48E5"]
+  var playing = true; // whether or not a song is playing
+  var first_deg = []; // stores first degree artists as objs
 
   // Dimensions for SVG
   var margin = {top: 40, bottom: 10, left: 20, right: 20};
   var width = 1400 - margin.left - margin.right;
-  var height = 600 - margin.top - margin.bottom;
+  var height = 550 - margin.top - margin.bottom;
 
   var force = d3.layout.force()
         .charge(forceCharge)
@@ -293,7 +275,7 @@
         .gravity(2.0);
 
   // Creates sources <svg> element and inner g (for margins)
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("#main").append("svg")
             .attr("width", width+margin.left+margin.right)
             .attr("height", height+margin.top+margin.bottom)
 
@@ -308,7 +290,8 @@
           visited.push(id);
           degree = 0;
           primaryObj = data;
-
+          barRender();
+          first_deg = [];
           get_related ();
         });
   }
@@ -316,10 +299,11 @@
   var get_related = function () {
     if (degree < limit) {
       var q = queue();
-      
+
       frontier[0].forEach(function (id) {
+          // load all artists that need to be visited
           q.defer(d3.json, "https://api.spotify.com/v1/artists/" + id + "/related-artists")
-      }) // load all artists that need to be visited
+      }) 
 
       // does not run until all artists in frontier[0] have been loaded
       q.awaitAll(function (error, obj_array) { 
@@ -328,8 +312,7 @@
 
             obj_array.forEach(function (artist,i) {
 
-              for (var j = 0; j < num_related; j++)
-              {
+              for (var j = 0; j < num_related; j++) {
                 var rel_artist = artist.artists[j];
 
                 if ( $.inArray(rel_artist.id, visited) < 0 ) {
@@ -339,28 +322,29 @@
                   visited.push(rel_artist.id); // add to visited
                 }
 
+                // record first-degree artists
+                if (degree == 0)
+                  first_deg.push(rel_artist);
+
                 getLinks(frontier[0][i],rel_artist.id);
-                
-              }
-                
+              } // end for loop
             }) // end obj_array forEach
 
             frontier.shift(); // truncates frontiers such that frontiers[1] = frontiers[0]
             frontier.push([]); // pushes empty array to end of frontier
             degree = degree + 1;
             get_related ();
-
         }) // end awaitall
 
     } // end if (degree < limit)
 
-    if (degree == limit){
+    if (degree == limit) {
       d3.select(".header").select("#primary")
           .text(graph.nodes[0].name);
        
        render();
     }      
-    } // end get_related
+  } // end get_related
 
     // creates nodes and links
     var render = function () {
@@ -402,29 +386,27 @@
             .remove();
 
         var node = svg.selectAll(".node")
-        .call(force.drag);
+          .call(force.drag);
 
         force
-        .nodes(graph.nodes)
-        .links(graph.links)
-        .start();
+          .nodes(graph.nodes)
+          .links(graph.links)
+          .start();
 
       force.on("tick", function(e) {
         link
-        // .transition().duration(150)
-        .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
+          .attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
 
-          node
-          // .transition().duration(150)
+        node
           .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+          .attr("cy", function(d) { return d.y; });
 
-          svg.selectAll("text")
-            .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y; }); 
+        svg.selectAll("text")
+          .attr("x", function(d) { return d.x; })
+          .attr("y", function(d) { return d.y; }); 
       })
 
       if (!samePrimary) {
@@ -433,251 +415,45 @@
           .await(function(error, d) {
             playRandom(primaryObj,d);
         })
+        listenObj = primaryObj;
+        barSetup();
       }
 
       // hover
       d3.selectAll(".node").on("mouseover", function (obj) {
         var info = d3.select(".info")
         d3.select(".header").select("#hovered")
-          .text(obj.name.toUpperCase());
-        info.select("#degree")
-          .text(obj.degree);
+          .text("Next, let's listen to music by " + obj.name + ".");
       })
 
       d3.selectAll(".node").on("mouseout", function (obj) {
         var info = d3.select(".info");
         d3.select(".header").select("#hovered")
-            .text("NONE");
-        info.select("#degree")
-            .text("None");
+            .text("");
       })
 
       // click
       d3.selectAll(".node").on("click", function (obj) {
-        samePrimary = true;
-        var wait_30sec = null;
-          clearTimeout(wait_30sec);
-
-          queue()
-            .defer(d3.json, baseUrl + obj.id + "/top-tracks?country=US") 
-            .await(function(error, d) {
-              playRandom(obj,d);
-          })
+        click_deg = this.className.baseVal.split(" ")[1];
+        whenClick(obj);
       });
 
       // double click
       d3.selectAll(".node").on("dblclick", function (obj) {
-        samePrimary = false;
-        doubleClicked = true;
-        currentNodeID = obj.id;
-        refresh(obj.id);
+        click_deg = "zero";
+        whenDblClick(obj);
       })
+    } // end render
 
-    }
-
-
-/*************************************************************
-
-  HELPER FUNCTIONS GO BELOW HERE...
-
-  ***********************************************************/
-
-  // function pushes the corresponding link into graph.links
-  var getLinks = function (sourceID, targetID) {
-
-    // variable to store index in graph.nodes of the artist we only have the ID for
-    var sourceIndex;
-    var targetIndex;
-
-    for (var j = graph.nodes.length - 1; j >= 0; j--) {
-            if (graph.nodes[j].id == sourceID)
-              sourceIndex = j;
-            if (graph.nodes[j].id == targetID)
-              targetIndex = j;
-    };
-    
-    graph.links.push({source: sourceIndex, target: targetIndex});
-  }
-
-  // function that populates songs
-  var getSongs = function (tracks) {
-    var len = tracks.length;
-    tracks.forEach(function(track,i){
-      d3.select(".info").select("#song" + (i+1))
-        .text(track.name);
-
-      for (var i = len; i < 10; i++) {
-        d3.select(".info").select("#song" + (i+1))
-          .text("");
-      }
-    })
-  }
-
-  // shuffles order
-  var shuffle = function (num) {
-    var array = [];
-    console.log(num)
-    for (var i = 0; i < num; i++)
-      array[i] = i;
-
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    return array;
-  }
-
-  // stops music
-  var stopMusic = function() {
-    d3.select(".info").selectAll(".song")
-      .classed("playing",false);
-    audio.pause();
-    audio.currentTime = 0;
-    curr_id = null;
-  }
-
-  // play song
-  var playSong = function(num) {
-    d3.select(".info").selectAll(".song")
-      .classed("playing",false);
-    d3.select(".info").select("#song" + (num+1))
-      .classed("playing",true);
-
-    var track = currTracks[num];
-    audio.src = track.preview_url;
-
-    // after 30 second preview, unhighlight
-    wait_30sec = setTimeout(function (){
-      d3.select(".info").select("#song" + (num+1))
-      .classed("playing",false);
-      }, 30500);
-
-    audio.play();
-  }
-
-  var playRandom = function(obj,d) {
-    d3.select(".info").selectAll(".song")
-            .classed("playing",false);
-
-    d3.select(".info").select("#clicked")
-      .text(obj.name);
-
-    if (click_id != obj.id) {
-      click = 0;
-      click_id = obj.id;
-
-      currTracks = d.tracks;
-      getSongs(currTracks);
-      order = shuffle(currTracks.length);
-    }
-
-    if (currTracks.length == 1)
-      var track_num = 0;
-    else {
-      var track_num = order[click % (currTracks.length - 1)];
-      console.log(order);
-    }
-
-
-    var track = currTracks[track_num];
-    d3.select(".info").select("#song" + (track_num+1))
-      .classed("playing",true);
-    audio.src = track.preview_url;
-
-    // after 30 second preview, unhighlight
-    wait_30sec = setTimeout(function (){
-      d3.select(".info").select("#song" + (track_num+1))
-      .classed("playing",false);
-      }, 30500);
-
-    audio.play();
-
-    click += 1;
-  }
-
-  var refresh = function (id) {
-    graph = {nodes: [], links: []};
-    frontier = [[],[]]; // keeping what needs to be visited (IDs)
-    visited = [];
-    svg.selectAll("text").remove();
-    start(id);
-  }
-
-
-  var changeNumNodes = function(number) {
-    num_related = number;
-    samePrimary = true;
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
-
-  // Note to self: the degree that I'm thinking of is actually limit
-  var changeDegreeNodes = function(newDegree) {
-    limit = newDegree;
-    samePrimary = true;
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
-
-  var changeNodeSize = function(sizeOfNode) {
-    nodeSize = sizeOfNode;
-    samePrimary = true;
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
-
-  var stopForceLayout = function() {
-    force.stop();
-  }
-
-  var restartForceLayout = function() {
-    force.start();
-  }
-
-  var changeCharge = function(newCharge) {
-    forceCharge = newCharge;
-    samePrimary = true;
-
-    force = d3.layout.force()
-        .charge(forceCharge)
-        .friction(0.9)
-        .size([width, height])
-        .gravity(1.5);
-
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
+    // highlighting initial settings upon page load
+    d3.select(".numberOfNodes").select("#num3")
+        .classed("selected", true);
+    d3.select(".degreeOfNodes").select("#deg4")
+        .classed("selected", true);
+    d3.select(".sizeOfNodes").select("#size17")
+        .classed("selected", true);
+    d3.select(".chargeOfNodes").select("#charge-5000")
+        .classed("selected", true);
 
   if (window.location.hash) {
     startSearchHash();
@@ -688,51 +464,52 @@
 
   </script>
 
-  <!-- Menu Toggle Script -->
+    <!-- Menu Toggle Script for Sidebar -->
     <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+      $("#menu-toggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });
 
-      $(function() {
-    $('a[href*=#]:not([href=#])').click(function() {
-      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-        if (target.length) {
-          $('html,body').animate({
-            scrollTop: target.offset().top
-          }, 1000);
-          return false;
+    $(function() {
+      $('a[href*=#]:not([href=#])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+          && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+              $('html,body').animate({
+                scrollTop: target.offset().top
+              }, 1000);
+              return false;
+            }
         }
-      }
+      });
     });
-  });
 
     </script>
 
-    <!-- Right Sidebar -->
+    <!-- Toggle Script for Right Sidebar -->
     <script>
-    $("#menu-toggle-right").click(function(e) {
-        e.preventDefault();
-        $("#wrapper-right").toggleClass("toggled");
-    });
+      $("#menu-toggle-right").click(function(e) {
+          e.preventDefault();
+          $("#wrapper-right").toggleClass("toggled");
+      });
 
-      $(function() {
-    $('a[href*=#]:not([href=#])').click(function() {
-      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-        if (target.length) {
-          $('html,body').animate({
-            scrollTop: target.offset().top
-          }, 1000);
-          return false;
+        $(function() {
+      $('a[href*=#]:not([href=#])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+          var target = $(this.hash);
+          target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+          if (target.length) {
+            $('html,body').animate({
+              scrollTop: target.offset().top
+            }, 1000);
+            return false;
+          }
         }
-      }
+      });
     });
-  });
 
     </script>
 

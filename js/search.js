@@ -32,8 +32,11 @@
           // console.log(data)
           // console.log(data.artists.items[0].name + data.artists.items[0].id)        
           samePrimary = false;
+          click_deg = "zero";
           refresh(curr_id);
           primaryObj = data.artists.items[0];
+          listenObj = primaryObj;
+          barRender();
 
           queue()
             .defer(d3.json, baseUrl + primaryObj.id + "/top-tracks?country=US") 
@@ -71,7 +74,6 @@
               playRandom(primaryObj,d);
             })
         })
-
 
      history.replaceState({}, document.title, "/main.html");
     }

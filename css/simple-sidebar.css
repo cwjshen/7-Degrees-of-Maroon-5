@@ -4,8 +4,9 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-/* Kit's comment: if you want the sidebar to go on the right, just find and replace all occurances of "left" with "right" */
+/*What we're using is a substantially modified version of this base sidebar.*/
 
+/*animation for right sidebar sliding transition*/
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -18,7 +19,9 @@
     padding-left: 250px;
 }
 
+/*also transition animation*/
 #sidebar-wrapper {
+    text-align: center;
     z-index: 1000;
     position: fixed;
     left: 300px;
@@ -66,13 +69,14 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #000000;
+    /*color: #000000;*/
     transition:0.5s ease all;
     -moz-transition:0.5s ease all; 
     -webkit-transition:0.5s ease all;
     -o-transition: all 0.5s ease;
 }
 
+/*properties for text background in sidebars*/
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #000000;
@@ -97,6 +101,10 @@
 .sidebar-nav > .sidebar-brand a:hover {
     color: #fff;
     background: none;
+}
+
+.song {
+    cursor: pointer;
 }
 
 @media(min-width:768px) {

@@ -1227,3 +1227,6 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=30); /* support: IE8 */
 	border-radius: 8px;
 }
+
+
+ul.ui-autocomplete.ui-menu{width:200px}

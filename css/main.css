@@ -1,0 +1,67 @@
+body {
+      width: 1400px;
+      margin: 25px auto;
+      font-family: 'Lato', sans-serif;
+      text-align: center;
+    }
+    .node {
+      stroke: #999;
+      stroke-width: 1;
+      fill: #33B5E5;
+      opacity: 0.9;
+    }
+    .zero {
+      fill: #33B5E5;
+    }
+    .one{
+      fill: #ff4500; 
+    }
+    .two{
+      fill: #98df8a;
+    }
+    .three{
+      fill: #FFA500;
+    }
+    .four{
+      fill: #FF4444;
+    }
+    .five{
+      fill: #7E48E5;
+    }
+      circle:hover {
+          opacity: 0.3;
+        }
+
+    .link {
+      stroke: #999;
+      stroke-opacity: 0.6;
+    }
+    .info {
+      line-height: 12px;
+    }
+    #clicked {
+      font-size: 16pt;
+    }
+    .header {
+      font-size: 18pt;
+    }
+    #primary {
+      color: #33B5E5;
+    }
+    .playing {
+      color: #fff;
+      background-color: #81b71a
+    }
+    .search{
+      font-size: 16pt;
+      text-align: center;
+    }
+    .ui-menu-item{
+      font-family: 'Lato', sans-serif;
+    }
+    .btn:hover{
+      background-color: #d3d3d3;
+    }
+    .ui-menu{
+      width: 241px;
+    }

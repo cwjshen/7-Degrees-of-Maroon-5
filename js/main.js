@@ -1,10 +1,14 @@
+ /* Main.js, needed to support the functionality of search.js. Pretty ugly design...
+    but couldn't figure out a work around. Provides access to the global variables that search.js
+    needs when being accessed from index.html. */
+
   var degree; // degree of separation where 0 is the original artist
-  var limit = 1; // highest degree from main artist; max 5
+  var limit = 4; // highest degree from main artist; max 5
   var frontier = [[],[]]; // keeping what needs to be visited (IDs)
   var visited = []; // keeping what has already been visited (IDs)
   var graph = {nodes: [], links: []};
   var starting_id = "04gDigrS5kc9YWfZHwBETP";
-  var num_related = 10; // number [1,20]
+  var num_related = 3; // number [1,20]
   var baseUrl = "https://api.spotify.com/v1/artists/";
   var searchUrl = "https://api.spotify.com/v1/search?q=";
   var audio = new Audio();
@@ -19,12 +23,17 @@
   var click = 0;
   var order = [];
   var primaryObj = {};
+  var listenObj = {};
   var samePrimary = false;
+  var click_deg = "zero";
+  var deg_colors = ["#33B5E5","#FF4500","#98df8a","#FFBB33","#FF4444","#7E48E5"]
+  var playing = true;
+  var first_deg = [];
 
   // Dimensions for SVG
   var margin = {top: 40, bottom: 10, left: 20, right: 20};
   var width = 1400 - margin.left - margin.right;
-  var height = 600 - margin.top - margin.bottom;
+  var height = 550 - margin.top - margin.bottom;
 
   var force = d3.layout.force()
         .charge(forceCharge)
@@ -33,7 +42,7 @@
         .gravity(2.0);
 
   // Creates sources <svg> element and inner g (for margins)
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("#main").append("svg")
             .attr("width", width+margin.left+margin.right)
             .attr("height", height+margin.top+margin.bottom)
 
@@ -48,7 +57,8 @@
           visited.push(id);
           degree = 0;
           primaryObj = data;
-
+          barRender();
+          first_deg = [];
           get_related ();
         });
   }
@@ -56,7 +66,7 @@
   var get_related = function () {
     if (degree < limit) {
       var q = queue();
-      
+
       frontier[0].forEach(function (id) {
           q.defer(d3.json, "https://api.spotify.com/v1/artists/" + id + "/related-artists")
       }) // load all artists that need to be visited
@@ -79,8 +89,11 @@
                   visited.push(rel_artist.id); // add to visited
                 }
 
+                // record first-degree artists
+                if (degree == 0)
+                  first_deg.push(rel_artist);
+
                 getLinks(frontier[0][i],rel_artist.id);
-                
               }
                 
             }) // end obj_array forEach
@@ -173,248 +186,43 @@
           .await(function(error, d) {
             playRandom(primaryObj,d);
         })
+        listenObj = primaryObj;
+        barSetup();
       }
 
       // hover
       d3.selectAll(".node").on("mouseover", function (obj) {
         var info = d3.select(".info")
         d3.select(".header").select("#hovered")
-          .text(obj.name.toUpperCase());
-        info.select("#degree")
-          .text(obj.degree);
+          .text("Next, let's listen to music by " + obj.name + ".");
       })
 
       d3.selectAll(".node").on("mouseout", function (obj) {
         var info = d3.select(".info");
         d3.select(".header").select("#hovered")
-            .text("NONE");
-        info.select("#degree")
-            .text("None");
+            .text("");
       })
 
       // click
       d3.selectAll(".node").on("click", function (obj) {
-        samePrimary = true;
-        var wait_30sec = null;
-          clearTimeout(wait_30sec);
 
-          queue()
-            .defer(d3.json, baseUrl + obj.id + "/top-tracks?country=US") 
-            .await(function(error, d) {
-              playRandom(obj,d);
-          })
+        click_deg = this.className.baseVal.split(" ")[1];
+        whenClick(obj);
       });
 
       // double click
       d3.selectAll(".node").on("dblclick", function (obj) {
-        samePrimary = false;
-        doubleClicked = true;
-        currentNodeID = obj.id;
-        refresh(obj.id);
+        click_deg = "zero";
+        whenDblClick(obj);
       })
-
     }
 
-
-/*************************************************************
-
-  HELPER FUNCTIONS GO BELOW HERE...
-
-  ***********************************************************/
-
-  // function pushes the corresponding link into graph.links
-  var getLinks = function (sourceID, targetID) {
-
-    // variable to store index in graph.nodes of the artist we only have the ID for
-    var sourceIndex;
-    var targetIndex;
-
-    for (var j = graph.nodes.length - 1; j >= 0; j--) {
-            if (graph.nodes[j].id == sourceID)
-              sourceIndex = j;
-            if (graph.nodes[j].id == targetID)
-              targetIndex = j;
-    };
-    
-    graph.links.push({source: sourceIndex, target: targetIndex});
-  }
-
-  // function that populates songs
-  var getSongs = function (tracks) {
-    var len = tracks.length;
-    tracks.forEach(function(track,i){
-      d3.select(".info").select("#song" + (i+1))
-        .text(track.name);
-
-      for (var i = len; i < 10; i++) {
-        d3.select(".info").select("#song" + (i+1))
-          .text("");
-      }
-    })
-  }
-
-  // shuffles order
-  var shuffle = function (num) {
-    var array = [];
-    console.log(num)
-    for (var i = 0; i < num; i++)
-      array[i] = i;
-
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    return array;
-  }
-
-  // stops music
-  var stopMusic = function() {
-    d3.select(".info").selectAll(".song")
-      .classed("playing",false);
-    audio.pause();
-    audio.currentTime = 0;
-    curr_id = null;
-  }
-
-  // play song
-  var playSong = function(num) {
-    d3.select(".info").selectAll(".song")
-      .classed("playing",false);
-    d3.select(".info").select("#song" + (num+1))
-      .classed("playing",true);
-
-    var track = currTracks[num];
-    audio.src = track.preview_url;
-
-    // after 30 second preview, unhighlight
-    wait_30sec = setTimeout(function (){
-      d3.select(".info").select("#song" + (num+1))
-      .classed("playing",false);
-      }, 30500);
-
-    audio.play();
-  }
-
-  var playRandom = function(obj,d) {
-    d3.select(".info").selectAll(".song")
-            .classed("playing",false);
-
-    d3.select(".info").select("#clicked")
-      .text(obj.name);
-
-    if (click_id != obj.id) {
-      click = 0;
-      click_id = obj.id;
-
-      currTracks = d.tracks;
-      getSongs(currTracks);
-      order = shuffle(currTracks.length);
-    }
-
-    if (currTracks.length == 1)
-      var track_num = 0;
-    else {
-      var track_num = order[click % (currTracks.length - 1)];
-      console.log(order);
-    }
-
-
-    var track = currTracks[track_num];
-    d3.select(".info").select("#song" + (track_num+1))
-      .classed("playing",true);
-    audio.src = track.preview_url;
-
-    // after 30 second preview, unhighlight
-    wait_30sec = setTimeout(function (){
-      d3.select(".info").select("#song" + (track_num+1))
-      .classed("playing",false);
-      }, 30500);
-
-    audio.play();
-
-    click += 1;
-  }
-
-  var refresh = function (id) {
-    graph = {nodes: [], links: []};
-    frontier = [[],[]]; // keeping what needs to be visited (IDs)
-    visited = [];
-    svg.selectAll("text").remove();
-    start(id);
-  }
-
-
-  var changeNumNodes = function(number) {
-    num_related = number;
-    samePrimary = true;
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
-
-  // Note to self: the degree that I'm thinking of is actually limit
-  var changeDegreeNodes = function(newDegree) {
-    limit = newDegree;
-    samePrimary = true;
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
-
-  var changeNodeSize = function(sizeOfNode) {
-    nodeSize = sizeOfNode;
-    samePrimary = true;
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
-
-  var stopForceLayout = function() {
-    force.stop();
-  }
-
-  var restartForceLayout = function() {
-    force.start();
-  }
-
-  var changeCharge = function(newCharge) {
-    forceCharge = newCharge;
-    samePrimary = true;
-
-    force = d3.layout.force()
-        .charge(forceCharge)
-        .friction(0.9)
-        .size([width, height])
-        .gravity(1.5);
-
-    if (doubleClicked == true) {
-      refresh(currentNodeID);
-    }
-    else if (curr_id == null) {
-      refresh(starting_id);
-    }
-    else {
-      refresh(curr_id);
-    }
-  }
+    // to make the initial settings already highlighted; if we don't want this, then we'll just comment this out.
+      d3.select(".numberOfNodes").select("#num3")
+          .classed("selected", true);
+      d3.select(".degreeOfNodes").select("#deg4")
+          .classed("selected", true);
+      d3.select(".sizeOfNodes").select("#size17")
+          .classed("selected", true);
+      d3.select(".chargeOfNodes").select("#charge-5000")
+          .classed("selected", true);
